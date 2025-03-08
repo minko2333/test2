@@ -13,7 +13,7 @@ export default function Home() {
           <p className="text-sm opacity-80">您的贴心生活伴侣</p>
         </header>
         
-        <div className="h-[30vh]">
+        <div className="h-[60vh]">
           <ChatModule />
         </div>
         
