@@ -18,18 +18,46 @@ const ChatModule = () => {
     '给我讲个笑话'
   ];
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (message.trim()) {
       // 添加用户消息到聊天历史
       setChatHistory([...chatHistory, { sender: 'user', text: message }]);
       
-      // 模拟AI响应
-      setTimeout(() => {
+      try {
+        // 显示加载状态
         setChatHistory(prev => [...prev, { 
           sender: 'ai', 
-          text: `我收到了您的消息："${message}"。我正在处理中...` 
+          text: '正在思考...' 
         }]);
-      }, 1000);
+        
+        // 调用 API
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ message })
+        });
+        
+        if (!response.ok) {
+          throw new Error('API 请求失败');
+        }
+        
+        const data = await response.json();
+        
+        // 更新最后一条 AI 消息
+        setChatHistory(prev => [
+          ...prev.slice(0, prev.length - 1),
+          { sender: 'ai', text: data.text }
+        ]);
+      } catch (error) {
+        console.error('发送消息错误:', error);
+        // 更新最后一条 AI 消息为错误信息
+        setChatHistory(prev => [
+          ...prev.slice(0, prev.length - 1),
+          { sender: 'ai', text: '抱歉，我遇到了一些问题，无法回应您的消息。' }
+        ]);
+      }
       
       setMessage('');
     }

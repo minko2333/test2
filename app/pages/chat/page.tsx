@@ -70,7 +70,7 @@ export default function ChatPage() {
     }
   }, [chatHistory]);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (message.trim()) {
       // 添加用户消息到聊天历史
       const userEmotion = detectEmotion(message);
@@ -80,34 +80,53 @@ export default function ChatPage() {
         emotion: userEmotion as any
       }]);
       
-      // 模拟AI响应
-      setTimeout(() => {
-        let response = '';
-        let aiEmotion: 'happy' | 'sad' | 'neutral' | 'confused' = 'neutral';
-        
-        if (message.includes('天气')) {
-          response = '今天天气晴朗，温度适宜，非常适合户外活动！';
-          aiEmotion = 'happy';
-        } else if (message.includes('不舒服')) {
-          response = '您哪里不舒服？需要我帮您联系医生吗？';
-          aiEmotion = 'sad';
-        } else if (message.includes('儿子') || message.includes('家人')) {
-          response = '好的，我可以帮您联系您的家人。您想给谁打电话？';
-          aiEmotion = 'neutral';
-        } else if (message.includes('歌')) {
-          response = '好的，您想听什么类型的歌曲？我可以为您播放一些轻松的音乐。';
-          aiEmotion = 'happy';
-        } else {
-          response = `我理解您的意思了。您还有其他问题吗？`;
-          aiEmotion = 'neutral';
-        }
-        
+      try {
+        // 显示加载状态
         setChatHistory(prev => [...prev, { 
           sender: 'ai', 
-          text: response,
-          emotion: aiEmotion
+          text: '正在思考...',
+          emotion: 'neutral'
         }]);
-      }, 1000);
+        
+        // 调用 API
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ message })
+        });
+        
+        if (!response.ok) {
+          throw new Error('API 请求失败');
+        }
+        
+        const data = await response.json();
+        
+        // 根据回复内容检测情绪
+        const aiEmotion = detectEmotion(data.text);
+        
+        // 更新最后一条 AI 消息
+        setChatHistory(prev => [
+          ...prev.slice(0, prev.length - 1),
+          { 
+            sender: 'ai', 
+            text: data.text,
+            emotion: aiEmotion as any
+          }
+        ]);
+      } catch (error) {
+        console.error('发送消息错误:', error);
+        // 更新最后一条 AI 消息为错误信息
+        setChatHistory(prev => [
+          ...prev.slice(0, prev.length - 1),
+          { 
+            sender: 'ai', 
+            text: '抱歉，我遇到了一些问题，无法回应您的消息。',
+            emotion: 'sad'
+          }
+        ]);
+      }
       
       setMessage('');
     }
