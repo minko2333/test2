@@ -6,23 +6,22 @@ import QuickAccessModule from './components/QuickAccessModule';
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col bg-gray-50">
-      <div className="flex-1 container mx-auto max-w-md bg-white shadow-sm overflow-hidden">
-        <header className="bg-blue-600 text-white p-4">
-          <h1 className="text-xl font-bold">老年关怀助手</h1>
-          <p className="text-sm opacity-80">您的贴心生活伴侣</p>
+    <main className="flex min-h-screen flex-col bg-gray-900">
+      <div className="flex-1 container mx-auto max-w-md bg-gray-800 shadow-sm overflow-hidden">
+        <header className="bg-gray-800 text-white p-4">
+          <h1 className="text-xl font-bold text-white">老年关怀助手</h1>
+          <p className="text-sm opacity-80 text-gray-300">您的贴心生活伴侣</p>
         </header>
         
-        <div className="h-[30vh]">
+        <div className="h-[80vh]">
           <ChatModule />
         </div>
         
         <QuickAccessModule />
         
-        {/* 这里可以添加更多内容 */}
         <div className="p-4">
-          <h2 className="text-lg font-medium text-gray-700 mb-3">今日提醒</h2>
-          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+          <h2 className="text-lg font-medium text-gray-200 mb-3">今日提醒</h2>
+          <div className="bg-gray-700 border-l-4 border-yellow-400 p-4 rounded">
             <div className="flex">
               <div className="flex-shrink-0">
                 <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
@@ -30,7 +29,7 @@ export default function Home() {
                 </svg>
               </div>
               <div className="ml-3">
-                <p className="text-sm text-yellow-700">
+                <p className="text-sm text-gray-300">
                   今天下午3点需要服用高血压药物
                 </p>
               </div>
