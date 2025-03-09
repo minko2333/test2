@@ -23,7 +23,7 @@ const NavigationBar = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white shadow-lg rounded-t-xl">
+    <nav className="fixed bottom-0 left-0 right-0 bg-gray-800 shadow-lg rounded-t-xl border-t border-gray-700">
       <div className="flex justify-around items-center p-2">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
@@ -32,7 +32,7 @@ const NavigationBar = () => {
               key={item.name}
               href={item.href}
               className={`flex flex-col items-center p-2 rounded-lg ${
-                isActive ? 'bg-blue-100 text-blue-600' : 'text-gray-600'
+                isActive ? 'bg-gray-700 text-blue-400' : 'text-gray-400'
               }`}
             >
               <item.icon className="h-6 w-6" />

@@ -8,6 +8,10 @@ export async function POST(request: NextRequest) {
     const requestBody = {
       model: "Qwen/Qwen2.5-7B-Instruct",  // 指定使用 Qwen2.5-7B-Instruct 模型
       messages: [
+        { 
+          role: "system", 
+          content: "你是一个贴心的私人管家，你的开头语为——你好主人！我是你的私人管家" 
+        },
         { role: "user", content: message }
       ],
       temperature: 0.7,  // 控制输出的随机性

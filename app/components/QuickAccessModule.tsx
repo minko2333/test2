@@ -43,8 +43,8 @@ const QuickAccessModule = () => {
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-lg font-medium text-gray-700 mb-3">快捷功能</h2>
+    <div className="p-4 bg-gray-800">
+      <h2 className="text-lg font-medium text-gray-200 mb-3">快捷功能</h2>
       <div className="grid grid-cols-3 gap-3">
         {quickAccessItems.map((item) => (
           <div key={item.name} className="flex flex-col items-center">
@@ -62,21 +62,21 @@ const QuickAccessModule = () => {
                 </div>
               </Link>
             )}
-            <span className="text-sm text-gray-600">{item.name}</span>
+            <span className="text-sm text-gray-300">{item.name}</span>
           </div>
         ))}
       </div>
 
       {/* 娱乐选项弹出层 */}
       {showEntertainmentOptions && (
-        <div className="mt-4 p-3 bg-white rounded-lg shadow-lg border border-gray-200">
-          <h3 className="text-md font-medium text-gray-700 mb-2">娱乐选项</h3>
+        <div className="mt-4 p-3 bg-gray-700 rounded-lg shadow-lg border border-gray-600">
+          <h3 className="text-md font-medium text-gray-200 mb-2">娱乐选项</h3>
           <div className="space-y-2">
             {entertainmentOptions.map((option, index) => (
               <button
                 key={index}
                 onClick={option.action}
-                className="w-full text-left p-2 rounded-lg hover:bg-purple-50 text-gray-700"
+                className="w-full text-left p-2 rounded-lg hover:bg-gray-600 text-gray-300"
               >
                 {option.name}
               </button>
